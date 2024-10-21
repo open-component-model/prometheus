@@ -1,0 +1,34 @@
+prometheus:
+  base_definition:
+    traits:
+      version: ~
+      component_descriptor:
+        component_name: ocm.software/ocm-gear/prometheus
+        ocm_repository: europe-docker.pkg.dev/gardener-project/releases
+
+  jobs:
+    manual-release:
+      traits:
+        version:
+          preprocess: finalize
+          inject_effective_version: True
+        publish:
+          helmcharts:
+            - name: prometheus
+              dir: charts/prometheus
+              registry: europe-docker.pkg.dev/gardener-project/releases/charts/ocm-gear
+              mappings:
+                - ref: ocm-resource:prometheus.repository
+                  attribute: image.repository
+                - ref: ocm-resource:prometheus.tag
+                  attribute: image.tag
+        release:
+          nextversion: bump_minor
+          release_notes_policy: disabled
+          release_commit_publishing_policy: tag_and_merge_back
+
+    head-update:
+      traits:
+        version: ~
+        component_descriptor:
+          ocm_repository: europe-docker.pkg.dev/gardener-project/snapshots
