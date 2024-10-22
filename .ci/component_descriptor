@@ -15,7 +15,7 @@ component_descriptor_path = os.path.abspath(ci.util.check_env('COMPONENT_DESCRIP
 own_dir = os.path.abspath(os.path.dirname(__file__))
 repo_dir = os.path.abspath(os.path.join(own_dir, os.pardir))
 
-PROMETHEUS_VERSIONFILE = os.path.join(repo_dir, 'PROMETHEUS_VERSION')
+PROMETHEUS_OPERATOR_VERSIONFILE = os.path.join(repo_dir, 'PROMETHEUS_OPERATOR_VERSION')
 
 
 def version_from_file(file_path: str):
@@ -31,18 +31,19 @@ def parse_component_descriptor():
     return component_descriptor
 
 
-def add_prometheus_image(
+def add_prometheus_operator_image(
     component: ocm.Component,
 ):
-    prometheus_version = version_from_file(PROMETHEUS_VERSIONFILE)
+    prometheus_operator_version = version_from_file(PROMETHEUS_OPERATOR_VERSIONFILE)
+    image_ref = f'quay.io/prometheus-operator/prometheus-operator:{prometheus_operator_version}'
 
     component.resources.append(
         ocm.Resource(
-            name='prometheus',
-            version=prometheus_version,
+            name='prometheus-operator',
+            version=prometheus_operator_version,
             type=ocm.ArtefactType.OCI_IMAGE,
             access=ocm.OciAccess(
-                imageReference=f'quay.io/prometheus/prometheus:{prometheus_version}',
+                imageReference=image_ref,
             ),
             relation=ocm.ResourceRelation.EXTERNAL,
         )
@@ -53,7 +54,7 @@ def main():
     component_descriptor = parse_component_descriptor()
     component = component_descriptor.component
 
-    add_prometheus_image(
+    add_prometheus_operator_image(
         component=component,
     )
 

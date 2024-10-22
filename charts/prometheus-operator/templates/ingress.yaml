@@ -13,23 +13,23 @@ spec:
   ingressClassName: {{ default "nginx" .Values.ingress.class }}
   rules:
   {{- range $host := .Values.ingress.hosts }}
-  - host: {{ $host }}
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: prometheus
-            port:
-              number: {{ default 8080 $.Values.servicePort }}
+    - host: {{ $host }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: prometheus-operated
+                port:
+                  number: 9090
   {{- end }}
   {{- if default dict .Values.ingress.tlsHostNames }}
   tls:
-  - hosts:
-    {{- range $host := .Values.ingress.tlsHostNames }}
-    - "{{ $host }}"
-    {{- end }}
-    secretName: prometheus-tls
+    - hosts:
+      {{- range $host := .Values.ingress.tlsHostNames }}
+        - "{{ $host }}"
+      {{- end }}
+      secretName: prometheus-tls
   {{- end }}
 {{- end }}
