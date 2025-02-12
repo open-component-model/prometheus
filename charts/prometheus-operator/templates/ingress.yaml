@@ -3,12 +3,12 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: prometheus
-  {{- if default dict .Values.ingress.annotations }}
   annotations:
-  {{- range $annotation, $value := .Values.ingress.annotations }}
+    cert.gardener.cloud/purpose: managed
+    dns.gardener.cloud/class: garden
+    {{- range $annotation, $value := default dict .Values.ingress.annotations }}
     {{ $annotation }}: {{ $value }}
-  {{- end }}
-  {{- end }}
+    {{- end }}
 spec:
   ingressClassName: {{ default "nginx" .Values.ingress.class }}
   rules:
@@ -24,12 +24,10 @@ spec:
                 port:
                   number: 9090
   {{- end }}
-  {{- if default dict .Values.ingress.tlsHostNames }}
   tls:
     - hosts:
-      {{- range $host := .Values.ingress.tlsHostNames }}
+      {{- range $host := .Values.ingress.hosts }}
         - "{{ $host }}"
       {{- end }}
       secretName: prometheus-tls
-  {{- end }}
 {{- end }}
