@@ -3,4 +3,14 @@ image:
   repository: ~
   tag: ~
 
+prometheus:
+  image:
+    repository: ~
+    tag: ~
+
+prometheus-config-reloader:
+  image:
+    repository: ~
+    tag: ~
+
 scrapeInterval: 15s

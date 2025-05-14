@@ -10,3 +10,8 @@ spec:
   serviceMonitorSelector:
     matchLabels:
       app: prometheus
+  image: {{ include "image" .Values.prometheus.image }}
+  version: {{ .Values.prometheus.image.tag }}
+  initContainers:
+  - name: config-reloader
+    image: {{ include "image" .Values.prometheus-config-reloader.image }}
