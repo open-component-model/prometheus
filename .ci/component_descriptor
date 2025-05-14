@@ -16,6 +16,8 @@ own_dir = os.path.abspath(os.path.dirname(__file__))
 repo_dir = os.path.abspath(os.path.join(own_dir, os.pardir))
 
 PROMETHEUS_OPERATOR_VERSIONFILE = os.path.join(repo_dir, 'PROMETHEUS_OPERATOR_VERSION')
+PROMETHEUS_VERSIONFILE = os.path.join(repo_dir, 'PROMETHEUS_VERSION')
+PROMETHEUS_CONFIG_RELOADER_VERSIONFILE = os.path.join(repo_dir, 'PROMETHEUS_CONFIG_RELOADER_VERSION')
 
 
 def version_from_file(file_path: str):
@@ -35,7 +37,7 @@ def add_prometheus_operator_image(
     component: ocm.Component,
 ):
     prometheus_operator_version = version_from_file(PROMETHEUS_OPERATOR_VERSIONFILE)
-    image_ref = f'quay.io/prometheus-operator/prometheus-operator:{prometheus_operator_version}'
+    image_ref = f'europe-docker.pkg.dev/gardener-project/releases/ocm-gear/prometheus-operator:{prometheus_operator_version}'
 
     component.resources.append(
         ocm.Resource(
@@ -50,11 +52,57 @@ def add_prometheus_operator_image(
     )
 
 
+def add_prometheus_image(
+    component: ocm.Component,
+):
+    prometheus_version = version_from_file(PROMETHEUS_VERSIONFILE)
+    image_ref = f'europe-docker.pkg.dev/gardener-project/releases/ocm-gear/prometheus:{prometheus_version}'
+
+    component.resources.append(
+        ocm.Resource(
+            name='prometheus',
+            version=prometheus_version,
+            type=ocm.ArtefactType.OCI_IMAGE,
+            access=ocm.OciAccess(
+                imageReference=image_ref,
+            ),
+            relation=ocm.ResourceRelation.EXTERNAL,
+        )
+    )
+
+
+def add_prometheus_config_reloader_image(
+    component: ocm.Component,
+):
+    prometheus_cfg_reloader_version = version_from_file(PROMETHEUS_CONFIG_RELOADER_VERSIONFILE)
+    image_ref = f'europe-docker.pkg.dev/gardener-project/releases/ocm-gear/prometheus-config-reloader:{prometheus_cfg_reloader_version}'
+
+    component.resources.append(
+        ocm.Resource(
+            name='prometheus-config-reloader',
+            version=prometheus_cfg_reloader_version,
+            type=ocm.ArtefactType.OCI_IMAGE,
+            access=ocm.OciAccess(
+                imageReference=image_ref,
+            ),
+            relation=ocm.ResourceRelation.EXTERNAL,
+        )
+    )
+
+
 def main():
     component_descriptor = parse_component_descriptor()
     component = component_descriptor.component
 
     add_prometheus_operator_image(
+        component=component,
+    )
+
+    add_prometheus_image(
+        component=component,
+    )
+
+    add_prometheus_config_reloader_image(
         component=component,
     )
 

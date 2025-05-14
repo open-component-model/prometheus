@@ -29,6 +29,14 @@ prometheus:
                   attribute: image.repository
                 - ref: ocm-resource:prometheus-operator.tag
                   attribute: image.tag
+                - ref: ocm-resource:prometheus.repository
+                  attribute: prometheus.image.repository
+                - ref: ocm-resource:prometheus.tag
+                  attribute: prometheus.image.tag
+                - ref: ocm-resource:prometheus-config-reloader.repository
+                  attribute: prometheus-config-reloader.image.repository
+                - ref: ocm-resource:prometheus-config-reloader.tag
+                  attribute: prometheus-config-reloader.image.tag
         release:
           nextversion: bump_minor
           release_notes_policy: disabled
