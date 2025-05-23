@@ -18,6 +18,8 @@ spec:
         - name: prometheus-operator
           image: {{ include "image" .Values.image }}
           imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
           ports:
             - containerPort: 9090
               name: default
