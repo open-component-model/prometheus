@@ -1,17 +1,35 @@
+{{- $podName := "prometheus" }}
+
 apiVersion: monitoring.coreos.com/v1
 kind: Prometheus
 metadata:
-  name: prometheus
+  name: {{ $podName }}
   labels:
-    app: prometheus
+    app: {{ $podName }}
 spec:
   serviceAccountName: prometheus
   serviceMonitorNamespaceSelector: {}
   serviceMonitorSelector:
     matchLabels:
-      app: prometheus
+      app: {{ $podName }}
   image: {{ include "image" .Values.prometheus.image }}
   version: {{ .Values.prometheus.image.tag }}
   initContainers:
   - name: config-reloader
     image: {{ include "image" (index .Values "prometheus-config-reloader" "image") }} # indexing required since `-` is not allowed in variable names
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-ingress-to-prometheus
+  namespace: {{ .Values.target_namespace | default .Release.Namespace }}
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: {{ $podName }}
+  policyTypes:
+    - Ingress
+  ingress:
+  - ports:
+    - protocol: TCP
+      port: 9090
