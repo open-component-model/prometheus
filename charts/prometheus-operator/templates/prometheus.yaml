@@ -14,8 +14,11 @@ spec:
       app: {{ $podName }}
   image: {{ include "image" .Values.prometheus.image }}
   version: {{ .Values.prometheus.image.tag }}
-  initContainers:
+  containers:
   - name: config-reloader
+    image: {{ include "image" (index .Values "prometheus-config-reloader" "image") }} # indexing required since `-` is not allowed in variable names
+  initContainers:
+  - name: init-config-reloader
     image: {{ include "image" (index .Values "prometheus-config-reloader" "image") }} # indexing required since `-` is not allowed in variable names
 ---
 apiVersion: networking.k8s.io/v1
