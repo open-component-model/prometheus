@@ -1,21 +1,23 @@
+{{- $podName := "prometheus-operator" }}
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: prometheus-operator
+  name: {{ $podName }}
   labels:
-    app: prometheus-operator
+    app: {{ $podName }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: prometheus-operator
+      app: {{ $podName }}
   template:
     metadata:
       labels:
-        app: prometheus-operator
+        app: {{ $podName }}
     spec:
       containers:
-        - name: prometheus-operator
+        - name: {{ $podName }}
           image: {{ include "image" .Values.image }}
           imagePullPolicy: IfNotPresent
           securityContext:
@@ -30,4 +32,18 @@ spec:
             requests:
               cpu: 100m
               memory: 100Mi
-      serviceAccountName: prometheus-operator
+      serviceAccountName: {{ $podName }}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-egress-from-prometheus-operator
+  namespace: {{ .Values.target_namespace | default .Release.Namespace }}
+spec:
+  podSelector:
+    matchLabels:
+      app: {{ $podName }}
+  policyTypes:
+    - Egress
+  egress:
+    - {}  # Allows all egress traffic to any destination and port
