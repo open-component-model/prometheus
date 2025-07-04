@@ -1,0 +1,36 @@
+name: ocm.software/ocm-gear/prometheus
+resources:
+  - name: prometheus-operator
+    version: v0.83.0
+    type: ociImage
+    access:
+      type: ociRegistry
+      imageReference: europe-docker.pkg.dev/gardener-project/releases/ocm-gear/prometheus-operator:v0.83.0
+    relation: external
+  - name: prometheus
+    version: v3.4.1
+    type: ociImage
+    access:
+      type: ociRegistry
+      imageReference: europe-docker.pkg.dev/gardener-project/releases/ocm-gear/prometheus:v3.4.1
+    relation: external
+  - name: prometheus-config-reloader
+    version: v0.83.0
+    type: ociImage
+    access:
+      type: ociRegistry
+      imageReference: europe-docker.pkg.dev/gardener-project/releases/ocm-gear/prometheus-config-reloader:v0.83.0
+    relation: external
+labels:
+  - name: cloud.gardener.cnudie/responsibles
+    value:
+      - type: githubTeam
+        github_hostname: github.com
+        teamname: open-component-model/odg-maintainers
+main-source:
+  labels:
+    - name: cloud.gardener.cnudie/dso/scanning-hints/source_analysis/v1
+      value:
+        policy: skip
+        comment: |
+          this repository does not contain source code, but only build descriptions.
