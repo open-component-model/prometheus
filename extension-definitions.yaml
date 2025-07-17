@@ -1,0 +1,37 @@
+name: prometheus-operator
+installation:
+  ocm_references:
+    - helm_chart_name: prometheus-operator
+      name: ocm.software/ocm-gear/prometheus
+      version: 0.14.0-dev
+      artefact:
+        name: prometheus-operator
+        version: 0.14.0-dev
+      mappings:
+      - name: prometheus-operator
+        version: 0.14.0-dev
+        artefact_type: helmchart-imagemap
+  value_templates:
+  - helm_chart_name: prometheus-operator
+    helm_attribute: ingress.annotations."cert.gardener.cloud/purpose"
+    value: managed
+    value_type: literal
+  - helm_chart_name: prometheus-operator
+    helm_attribute: ingress.annotations."dns.gardener.cloud/class"
+    value: garden
+    value_type: literal
+  - helm_chart_name: prometheus-operator
+    helm_attribute: ingress.annotations."dns.gardener.cloud/dnsnames"
+    value: '"*"'
+    value_type: literal
+  - helm_chart_name: prometheus-operator
+    helm_attribute: ingress.hosts
+    value:
+      - prometheus.${base_url}
+    value_type: python-string-template
+  - helm_chart_name: prometheus-operator
+    helm_attribute: ingress.class
+    value: nginx
+    value_type: literal
+outputs: []
+dependencies: []
