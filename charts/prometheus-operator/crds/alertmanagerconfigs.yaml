@@ -80,11 +80,6 @@ spec:
                             description: |-
                               Match operation available with AlertManager >= v0.22.0 and
                               takes precedence over Regex (deprecated) if non-empty.
-                            enum:
-                            - '!='
-                            - =
-                            - =~
-                            - '!~'
                             type: string
                           name:
                             description: Label to match.
@@ -113,11 +108,6 @@ spec:
                             description: |-
                               Match operation available with AlertManager >= v0.22.0 and
                               takes precedence over Regex (deprecated) if non-empty.
-                            enum:
-                            - '!='
-                            - =
-                            - =~
-                            - '!~'
                             type: string
                           name:
                             description: Label to match.
@@ -10739,11 +10729,6 @@ spec:
                           description: |-
                             Match operation available with AlertManager >= v0.22.0 and
                             takes precedence over Regex (deprecated) if non-empty.
-                          enum:
-                          - '!='
-                          - =
-                          - =~
-                          - '!~'
                           type: string
                         name:
                           description: Label to match.
