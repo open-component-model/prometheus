@@ -3,6 +3,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: prometheus
+  namespace: {{ .Values.target_namespace | default .Release.Namespace }}
   annotations:
     {{- range $annotation, $value := default dict .Values.ingress.annotations }}
     {{ $annotation }}: {{ $value }}

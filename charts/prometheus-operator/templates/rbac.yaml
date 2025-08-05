@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: prometheus-operator
+  namespace: {{ .Values.target_namespace | default .Release.Namespace }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -139,12 +140,13 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: prometheus-operator
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ .Values.target_namespace | default .Release.Namespace }}
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: prometheus
+  namespace: {{ .Values.target_namespace | default .Release.Namespace }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -201,4 +203,4 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: prometheus
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ .Values.target_namespace | default .Release.Namespace }}
