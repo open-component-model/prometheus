@@ -4,6 +4,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ $podName }}
+  namespace: {{ .Values.target_namespace | default .Release.Namespace }}
   labels:
     app: {{ $podName }}
 spec:

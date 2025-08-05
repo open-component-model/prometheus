@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: prometheus-operator
+  namespace: {{ .Values.target_namespace | default .Release.Namespace }}
   labels:
     app: prometheus-operator
 spec:

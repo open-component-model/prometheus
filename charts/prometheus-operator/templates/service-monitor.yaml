@@ -2,6 +2,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: prometheus
+  namespace: {{ .Values.target_namespace | default .Release.Namespace }}
   labels:
     app: prometheus
 spec:
