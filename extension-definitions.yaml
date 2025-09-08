@@ -31,7 +31,7 @@ installation:
       value_type: python-string-template
     - helm_chart_name: prometheus-operator
       helm_attribute: ingress.class
-      value: nginx
-      value_type: literal
+      value: nginx-${target_namespace}
+      value_type: python-string-template
 outputs: []
 dependencies: []
