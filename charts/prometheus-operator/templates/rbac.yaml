@@ -8,6 +8,10 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: prometheus-operator
+  annotations:
+    {{- range $annotation, $value := default dict .Values.rbac.annotations }}
+    {{ $annotation }}: {{ $value }}
+    {{- end }}
 rules:
   - apiGroups:
       - monitoring.coreos.com
@@ -133,6 +137,10 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: prometheus-operator
+  annotations:
+    {{- range $annotation, $value := default dict .Values.rbac.annotations }}
+    {{ $annotation }}: {{ $value }}
+    {{- end }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -152,6 +160,10 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: prometheus
+  annotations:
+    {{- range $annotation, $value := default dict .Values.rbac.annotations }}
+    {{ $annotation }}: {{ $value }}
+    {{- end }}
 rules:
   - apiGroups:
       - ''
@@ -196,6 +208,10 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: prometheus
+  annotations:
+    {{- range $annotation, $value := default dict .Values.rbac.annotations }}
+    {{ $annotation }}: {{ $value }}
+    {{- end }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole

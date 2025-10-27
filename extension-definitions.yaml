@@ -33,5 +33,9 @@ installation:
       helm_attribute: ingress.class
       value: nginx-${target_namespace}
       value_type: python-string-template
+    - helm_chart_name: prometheus-operator
+      helm_attribute: rbac.annotations."resources.gardener.cloud/keep-object"
+      value: ${keep_clusterwide_objects}
+      value_type: python-string-template
 outputs: []
 dependencies: []
