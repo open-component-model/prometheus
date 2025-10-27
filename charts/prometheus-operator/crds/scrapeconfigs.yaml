@@ -4,6 +4,7 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.18.0
     operator.prometheus.io/version: 0.84.0
+    resources.gardener.cloud/keep-object: "true"
   name: scrapeconfigs.monitoring.coreos.com
 spec:
   group: monitoring.coreos.com
