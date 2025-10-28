@@ -9,7 +9,7 @@ kind: ClusterRole
 metadata:
   name: prometheus-operator
   annotations:
-    {{- range $annotation, $value := default dict .Values.rbac.annotations }}
+    {{- range $annotation, $value := default dict (.Values.rbac).annotations }}
     {{ $annotation }}: {{ $value }}
     {{- end }}
 rules:
@@ -138,7 +138,7 @@ kind: ClusterRoleBinding
 metadata:
   name: prometheus-operator
   annotations:
-    {{- range $annotation, $value := default dict .Values.rbac.annotations }}
+    {{- range $annotation, $value := default dict (.Values.rbac).annotations }}
     {{ $annotation }}: {{ $value }}
     {{- end }}
 roleRef:
@@ -161,7 +161,7 @@ kind: ClusterRole
 metadata:
   name: prometheus
   annotations:
-    {{- range $annotation, $value := default dict .Values.rbac.annotations }}
+    {{- range $annotation, $value := default dict (.Values.rbac).annotations }}
     {{ $annotation }}: {{ $value }}
     {{- end }}
 rules:
@@ -209,7 +209,7 @@ kind: ClusterRoleBinding
 metadata:
   name: prometheus
   annotations:
-    {{- range $annotation, $value := default dict .Values.rbac.annotations }}
+    {{- range $annotation, $value := default dict (.Values.rbac).annotations }}
     {{ $annotation }}: {{ $value }}
     {{- end }}
 roleRef:
