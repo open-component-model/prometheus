@@ -15,7 +15,7 @@ jobs:
   prepare:
     uses: gardener/cc-utils/.github/workflows/prepare.yaml@master
     permissions:
-      contents: read
+      id-token: write
     with:
       mode: ${{ inputs.mode }}
 
@@ -23,8 +23,10 @@ jobs:
     runs-on: ubuntu-latest
     needs:
     - prepare
+    permissions:
+      contents: read
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - name: Export odg-extension-definitions
       run: |
         export version=${{ needs.prepare.outputs.version }}
