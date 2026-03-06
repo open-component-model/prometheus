@@ -13,6 +13,10 @@ installation:
           artefact_type: helmchart-imagemap
   value_templates:
     - helm_chart_name: prometheus-operator
+      helm_attribute: host
+      value: prometheus.${base_url}
+      value_type: python-string-template
+    - helm_chart_name: prometheus-operator
       helm_attribute: ingress.annotations."cert.gardener.cloud/purpose"
       value: managed
       value_type: literal
