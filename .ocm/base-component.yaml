@@ -8,11 +8,11 @@ resources:
       imageReference: europe-docker.pkg.dev/gardener-project/releases/ocm-gear/prometheus-operator:v0.89.0
     relation: external
   - name: prometheus
-    version: v3.4.1
+    version: v3.10.0
     type: ociImage
     access:
       type: ociRegistry
-      imageReference: europe-docker.pkg.dev/gardener-project/releases/ocm-gear/prometheus:v3.4.1
+      imageReference: europe-docker.pkg.dev/gardener-project/releases/ocm-gear/prometheus:v3.10.0-distroless
     relation: external
   - name: prometheus-config-reloader
     version: v0.89.0
