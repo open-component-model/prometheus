@@ -1,11 +1,11 @@
 name: ocm.software/ocm-gear/prometheus
 resources:
   - name: prometheus-operator
-    version: v0.83.0
+    version: v0.89.0
     type: ociImage
     access:
       type: ociRegistry
-      imageReference: europe-docker.pkg.dev/gardener-project/releases/ocm-gear/prometheus-operator:v0.83.0
+      imageReference: europe-docker.pkg.dev/gardener-project/releases/ocm-gear/prometheus-operator:v0.89.0
     relation: external
   - name: prometheus
     version: v3.4.1
@@ -15,11 +15,11 @@ resources:
       imageReference: europe-docker.pkg.dev/gardener-project/releases/ocm-gear/prometheus:v3.4.1
     relation: external
   - name: prometheus-config-reloader
-    version: v0.83.0
+    version: v0.89.0
     type: ociImage
     access:
       type: ociRegistry
-      imageReference: europe-docker.pkg.dev/gardener-project/releases/ocm-gear/prometheus-config-reloader:v0.83.0
+      imageReference: europe-docker.pkg.dev/gardener-project/releases/ocm-gear/prometheus-config-reloader:v0.89.0
     relation: external
 labels:
   - name: cloud.gardener.cnudie/responsibles
