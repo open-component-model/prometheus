@@ -1,13 +1,15 @@
+{{- $namespace := .Values.target_namespace | default .Release.Namespace }}
+
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: prometheus-operator
-  namespace: {{ .Values.target_namespace | default .Release.Namespace }}
+  namespace: {{ $namespace }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: prometheus-operator
+  name: prometheus-operator-{{ $namespace }}
   annotations:
     {{- range $annotation, $value := default dict (.Values.rbac).annotations }}
     {{ $annotation }}: {{ $value }}
@@ -136,7 +138,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: prometheus-operator
+  name: prometheus-operator-{{ $namespace }}
   annotations:
     {{- range $annotation, $value := default dict (.Values.rbac).annotations }}
     {{ $annotation }}: {{ $value }}
@@ -144,22 +146,22 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: prometheus-operator
+  name: prometheus-operator-{{ $namespace }}
 subjects:
 - kind: ServiceAccount
   name: prometheus-operator
-  namespace: {{ .Values.target_namespace | default .Release.Namespace }}
+  namespace: {{ $namespace }}
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: prometheus
-  namespace: {{ .Values.target_namespace | default .Release.Namespace }}
+  namespace: {{ $namespace }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: prometheus
+  name: prometheus-{{ $namespace }}
   annotations:
     {{- range $annotation, $value := default dict (.Values.rbac).annotations }}
     {{ $annotation }}: {{ $value }}
@@ -207,7 +209,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: prometheus
+  name: prometheus-{{ $namespace }}
   annotations:
     {{- range $annotation, $value := default dict (.Values.rbac).annotations }}
     {{ $annotation }}: {{ $value }}
@@ -215,8 +217,8 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: prometheus
+  name: prometheus-{{ $namespace }}
 subjects:
 - kind: ServiceAccount
   name: prometheus
-  namespace: {{ .Values.target_namespace | default .Release.Namespace }}
+  namespace: {{ $namespace }}
