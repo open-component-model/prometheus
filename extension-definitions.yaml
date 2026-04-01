@@ -17,27 +17,6 @@ installation:
       value: prometheus.${base_url}
       value_type: python-string-template
     - helm_chart_name: prometheus-operator
-      helm_attribute: ingress.annotations."cert.gardener.cloud/purpose"
-      value: managed
-      value_type: literal
-    - helm_chart_name: prometheus-operator
-      helm_attribute: ingress.annotations."dns.gardener.cloud/class"
-      value: garden
-      value_type: literal
-    - helm_chart_name: prometheus-operator
-      helm_attribute: ingress.annotations."dns.gardener.cloud/dnsnames"
-      value: '"*"'
-      value_type: literal
-    - helm_chart_name: prometheus-operator
-      helm_attribute: ingress.hosts
-      value:
-        - prometheus.${base_url}
-      value_type: python-string-template
-    - helm_chart_name: prometheus-operator
-      helm_attribute: ingress.class
-      value: nginx-${target_namespace}
-      value_type: python-string-template
-    - helm_chart_name: prometheus-operator
       helm_attribute: rbac.annotations."resources.gardener.cloud/keep-object"
       value: '"${keep_clusterwide_objects}"'
       value_type: python-string-template
