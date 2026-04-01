@@ -16,21 +16,6 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: nginx-ingress-controller
-  namespace: {{ .Values.target_namespace | default .Release.Namespace }}
-  labels:
-    app: prometheus
-spec:
-  selector:
-    matchLabels:
-      app.kubernetes.io/name: nginx-ingress-controller
-  endpoints:
-    - port: metrics
-      interval: 15s
----
-apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
-metadata:
   name: envoy-gateway
   namespace: {{ .Values.target_namespace | default .Release.Namespace }}
   labels:
