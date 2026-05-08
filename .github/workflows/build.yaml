@@ -26,7 +26,7 @@ jobs:
     permissions:
       contents: read
     steps:
-    - uses: actions/checkout@v6
+    - uses: gardener/cc-utils/.github/actions/trusted-checkout@master
     - name: Export odg-extension-definitions
       run: |
         export version=${{ needs.prepare.outputs.version }}
